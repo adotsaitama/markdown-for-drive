@@ -26,6 +26,15 @@ npm run dev
 npm run typecheck
 npm run verify:pipeline
 npm run verify:drive
+npm run verify:design
 ```
 
 プロダクションビルドは `npm run build`、ビルド結果の確認は `npm run preview` です。
+
+## Theme attribution
+
+既定テーマの色は
+[Blue Topaz](https://github.com/whyt-byte/Blue-Topaz_Obsidian-css)
+（MIT License, Copyright © 2020 whyt-byte）から抽出・再構成しています。
+アプリ本体および利用している依存ライブラリは、MIT / BSD-3-Clause
+などの許諾型ライセンスのみを採用しています。

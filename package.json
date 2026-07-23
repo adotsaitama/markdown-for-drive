@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "verify:pipeline": "esbuild scripts/verify-editor-preview.tsx --bundle --platform=node --format=cjs --jsx=automatic --outfile=/tmp/markdown-for-drive-pipeline.cjs && node /tmp/markdown-for-drive-pipeline.cjs",
-    "verify:drive": "esbuild scripts/verify-drive-integration.ts --bundle --platform=node --format=esm --outfile=/tmp/markdown-for-drive-drive.mjs && node /tmp/markdown-for-drive-drive.mjs"
+    "verify:drive": "esbuild scripts/verify-drive-integration.ts --bundle --platform=node --format=esm --outfile=/tmp/markdown-for-drive-drive.mjs && node /tmp/markdown-for-drive-drive.mjs",
+    "verify:design": "esbuild scripts/verify-design-completion.tsx --bundle --platform=node --format=cjs --jsx=automatic --outfile=/tmp/markdown-for-drive-design.cjs && node /tmp/markdown-for-drive-design.cjs"
   },
   "dependencies": {
     "@codemirror/commands": "^6.10.4",

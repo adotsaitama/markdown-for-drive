@@ -8,6 +8,7 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { changeListIndent } from "../lib/markdownCommands";
 import { EDITOR_COMMANDS } from "../lib/editorCommands";
 import { getShortcuts } from "../lib/shortcutConfig";
+import { logger } from "../lib/logger";
 
 interface MarkdownEditorProps {
   /** Document shown when the editor mounts. Later changes do not reset the view. */
@@ -118,9 +119,10 @@ export function MarkdownEditor({
               .then((path) => replacePlaceholder(`![](${path})`))
               .catch((err: unknown) => {
                 replacePlaceholder("");
-                console.error("image upload failed:", err);
-                window.alert(
-                  `画像のアップロードに失敗しました: ${err instanceof Error ? err.message : err}`,
+                logger.error(
+                  "drive.imageUpload",
+                  err,
+                  "画像のアップロードに失敗しました。",
                 );
               });
             return true;

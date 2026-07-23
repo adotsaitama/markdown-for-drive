@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { logger } from "../lib/logger";
 
 interface MermaidBlockProps {
   code: string;
@@ -37,6 +38,7 @@ export function MermaidBlock({ code, dark }: MermaidBlockProps) {
         // mermaid.render can leave a stray error element behind; drop it.
         document.querySelector("#dmermaid-render-" + renderSeq)?.remove();
         if (!alive) return;
+        logger.warn("mermaid", err);
         setError(err instanceof Error ? err.message : String(err));
       }
     })();

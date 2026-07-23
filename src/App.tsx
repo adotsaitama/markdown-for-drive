@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { IconMoon, IconSun } from "./components/Icons";
 import { ErrorFallback } from "./components/ErrorFallback";
 import { useDriveFile } from "./hooks/useDriveFile";
 import { useGoogleAuth } from "./hooks/useGoogleAuth";
 import { useTheme } from "./hooks/useTheme";
 import { extractOpenFileId } from "./lib/driveState";
+import { logger } from "./lib/logger";
 import { EditorPage } from "./pages/EditorPage";
 import { HomePage } from "./pages/HomePage";
 import { useRouter } from "./router";
@@ -29,6 +30,24 @@ export default function App() {
       {themeIcon}
     </button>
   );
+
+  useEffect(() => {
+    if (auth.accessToken) {
+      logger.info("auth", "Google authentication completed");
+    }
+  }, [auth.accessToken]);
+
+  useEffect(() => {
+    if (file.isError) {
+      logger.error(
+        "drive.read",
+        file.error,
+        "Google Driveからファイルを読み込めませんでした。",
+      );
+    } else if (file.data) {
+      logger.info("drive.read", "File load completed");
+    }
+  }, [file.data, file.error, file.isError]);
 
   if (route === "not-found") {
     return (

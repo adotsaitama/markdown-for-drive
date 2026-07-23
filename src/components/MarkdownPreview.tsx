@@ -8,6 +8,7 @@ import ReactMarkdown, { type ExtraProps } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { rehypeSourceLine } from "../lib/rehypeSourceLine";
+import { logger } from "../lib/logger";
 import { MermaidBlock } from "./MermaidBlock";
 
 export type ImageResolver = (src: string) => Promise<string | null>;
@@ -105,9 +106,15 @@ function DriveImage({
       .then((url) => {
         if (!alive) return;
         if (url) setResolved(url);
-        else setFailed(true);
+        else {
+          logger.warn("drive.imageResolve", "Image could not be resolved");
+          setFailed(true);
+        }
       })
-      .catch(() => alive && setFailed(true));
+      .catch((error: unknown) => {
+        logger.warn("drive.imageResolve", error);
+        if (alive) setFailed(true);
+      });
     return () => {
       alive = false;
     };

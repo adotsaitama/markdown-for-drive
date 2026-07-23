@@ -200,6 +200,21 @@ textarea:focus-visible {
   color: var(--accent);
 }
 
+.save-status-error,
+.inline-error {
+  color: var(--error-fg);
+}
+
+.link-button {
+  padding: 0 0 0 0.35rem;
+  border: 0;
+  color: var(--accent);
+  background: none;
+  font-size: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .icon-button,
 .format-button,
 .mode-button {
@@ -734,6 +749,63 @@ textarea:focus-visible {
 
 .primary-button {
   padding: 0.7rem 1.15rem;
+}
+
+.login-button {
+  padding: 0.65rem 1.15rem;
+  border: 0;
+  border-radius: 7px;
+  color: var(--accent-fg);
+  background: var(--accent);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.login-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.auth-success {
+  color: var(--fg) !important;
+}
+
+.notice {
+  padding: 3rem 1rem;
+  color: var(--fg);
+  text-align: center;
+}
+
+.loading {
+  color: var(--muted);
+}
+
+.error-fallback {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--error-border);
+  border-radius: 8px;
+  background: var(--error-bg);
+}
+
+.error-fallback h2 {
+  margin-top: 0;
+  color: var(--error-fg);
+  font-size: 1.05rem;
+}
+
+.error-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.error-actions button {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--fg);
+  background: var(--bg);
+  cursor: pointer;
 }
 
 .not-found {

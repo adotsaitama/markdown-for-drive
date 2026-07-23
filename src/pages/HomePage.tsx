@@ -1,12 +1,17 @@
+import { LoginButton } from "../components/LoginButton";
+import type { GoogleAuth } from "../hooks/useGoogleAuth";
+
 interface HomePageProps {
-  onOpenDemo: () => void;
+  hasLaunchFile: boolean;
+  auth: GoogleAuth;
   onToggleTheme: () => void;
   themeLabel: string;
   themeIcon: React.ReactNode;
 }
 
 export function HomePage({
-  onOpenDemo,
+  hasLaunchFile,
+  auth,
   onToggleTheme,
   themeLabel,
   themeIcon,
@@ -17,7 +22,7 @@ export function HomePage({
         <div className="title-block">
           <h1 className="doc-title">Markdown for Drive</h1>
           <span className="doc-meta">
-            Google Drive から Markdown を開くためのエディタ
+            Google DriveからMarkdownを開くためのエディタ
           </span>
         </div>
         <button
@@ -35,14 +40,29 @@ export function HomePage({
           <span className="file-mark" aria-hidden="true">
             MD
           </span>
-          <h2>ファイルが指定されていません</h2>
+          <h2>
+            {hasLaunchFile
+              ? "Google Driveへのアクセスを許可してください"
+              : "ファイルが指定されていません"}
+          </h2>
           <p>
-            Google Drive の「アプリで開く」から Markdown ファイルを選ぶと、
-            ここに編集ワークスペースが開きます。
+            {hasLaunchFile
+              ? "ファイルとメタデータを読み込むには、Googleアカウントでのログインが必要です。"
+              : "Google Driveの「アプリで開く」からMarkdownファイルを選ぶと、編集ワークスペースが開きます。初回ログインで「アプリで開く」に登録されます。"}
           </p>
-          <button className="primary-button" type="button" onClick={onOpenDemo}>
-            モック文書を開く
-          </button>
+          {!auth.accessToken ? (
+            <LoginButton
+              onClick={auth.signIn}
+              disabled={!auth.isConfigured || !auth.isReady}
+              isAuthenticating={auth.isAuthenticating}
+            />
+          ) : (
+            <p className="auth-success">
+              ✓ ログインしました。Google
+              DriveからMarkdownファイルを開いてください。
+            </p>
+          )}
+          {auth.error && <p className="inline-error">{auth.error}</p>}
         </div>
       </main>
     </div>

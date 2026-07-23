@@ -89,7 +89,11 @@ function DriveImage({
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    if (!relative || typeof src !== "string") return;
+    if (!relative || typeof src !== "string") {
+      setFailed(false);
+      setResolved(src ?? null);
+      return;
+    }
     if (!resolveImage) {
       setFailed(true);
       return;

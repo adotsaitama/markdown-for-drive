@@ -18,10 +18,7 @@ const NON_RETRYABLE = new Set([401, 403, 404]);
  * Fetch a Drive file's metadata + text content via TanStack Query.
  * Disabled until both `fileId` and `accessToken` are available.
  */
-export function useDriveFile(
-  fileId: string | null,
-  accessToken: string | null,
-) {
+export function useDriveFile(fileId: string | null, accessToken: string | null) {
   return useQuery<DriveFile, Error>({
     queryKey: ["driveFile", fileId, accessToken],
     enabled: Boolean(fileId) && Boolean(accessToken),

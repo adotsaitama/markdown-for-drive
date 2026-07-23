@@ -3,8 +3,7 @@
 // Upload:    https://developers.google.com/drive/api/guides/manage-uploads#simple
 
 const DRIVE_FILES_ENDPOINT = "https://www.googleapis.com/drive/v3/files";
-const DRIVE_UPLOAD_ENDPOINT =
-  "https://www.googleapis.com/upload/drive/v3/files";
+const DRIVE_UPLOAD_ENDPOINT = "https://www.googleapis.com/upload/drive/v3/files";
 
 export interface DriveFileMeta {
   id: string;
@@ -119,10 +118,7 @@ export async function createFolder(
 ): Promise<DriveChild> {
   const res = await fetch(`${DRIVE_FILES_ENDPOINT}?fields=id,name`, {
     method: "POST",
-    headers: {
-      ...authHeaders(accessToken),
-      "Content-Type": "application/json",
-    },
+    headers: { ...authHeaders(accessToken), "Content-Type": "application/json" },
     body: JSON.stringify({ name, mimeType: FOLDER_MIME, parents: [parentId] }),
   });
   if (!res.ok) throw await toApiError(res);
@@ -148,26 +144,20 @@ export async function uploadBinaryFile(
     ],
     { type: `multipart/related; boundary=${boundary}` },
   );
-  const res = await fetch(
-    `${DRIVE_UPLOAD_ENDPOINT}?uploadType=multipart&fields=id,name`,
-    {
-      method: "POST",
-      headers: {
-        ...authHeaders(accessToken),
-        "Content-Type": `multipart/related; boundary=${boundary}`,
-      },
-      body,
+  const res = await fetch(`${DRIVE_UPLOAD_ENDPOINT}?uploadType=multipart&fields=id,name`, {
+    method: "POST",
+    headers: {
+      ...authHeaders(accessToken),
+      "Content-Type": `multipart/related; boundary=${boundary}`,
     },
-  );
+    body,
+  });
   if (!res.ok) throw await toApiError(res);
   return (await res.json()) as DriveChild;
 }
 
 /** Fetch a file's binary content (for resolving image previews). */
-export async function fetchDriveFileBlob(
-  fileId: string,
-  accessToken: string,
-): Promise<Blob> {
+export async function fetchDriveFileBlob(fileId: string, accessToken: string): Promise<Blob> {
   const url = `${DRIVE_FILES_ENDPOINT}/${encodeURIComponent(fileId)}?alt=media`;
   const res = await fetch(url, { headers: authHeaders(accessToken) });
   if (!res.ok) throw await toApiError(res);

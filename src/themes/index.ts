@@ -1,6 +1,12 @@
 import { blueTopazTheme } from "./blueTopaz";
 import { defaultTheme } from "./defaultTheme";
 
+/**
+ * Theme system: each theme provides light/dark token sets that are applied
+ * as CSS variables on <html>. Porting another Obsidian theme = extracting
+ * its .theme-light / .theme-dark values into a new AppTheme file and
+ * registering it here.
+ */
 export interface ThemeTokens {
   bg: string;
   bgSecondary: string;
@@ -33,8 +39,10 @@ export interface AppTheme {
 }
 
 export const THEMES: AppTheme[] = [blueTopazTheme, defaultTheme];
+
 export const DEFAULT_THEME_ID = blueTopazTheme.id;
 
+/** token key -> CSS variable name */
 const VAR_MAP: Record<keyof ThemeTokens, string> = {
   bg: "--bg",
   bgSecondary: "--bg-secondary",
@@ -60,14 +68,10 @@ const VAR_MAP: Record<keyof ThemeTokens, string> = {
 };
 
 export function applyTheme(themeId: string, mode: "light" | "dark"): void {
-  const theme =
-    THEMES.find((candidate) => candidate.id === themeId) ?? THEMES[0];
+  const theme = THEMES.find((t) => t.id === themeId) ?? THEMES[0];
+  const tokens = theme[mode];
   const style = document.documentElement.style;
-
-  for (const [token, property] of Object.entries(VAR_MAP) as [
-    keyof ThemeTokens,
-    string,
-  ][]) {
-    style.setProperty(property, theme[mode][token]);
+  for (const [key, cssVar] of Object.entries(VAR_MAP) as [keyof ThemeTokens, string][]) {
+    style.setProperty(cssVar, tokens[key]);
   }
 }

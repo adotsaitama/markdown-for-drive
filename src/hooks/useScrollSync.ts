@@ -8,8 +8,7 @@ interface LineAnchor {
 
 /** Collect `[data-line]` anchors in the preview, with tops relative to the scroll container. */
 function collectAnchors(container: HTMLElement): LineAnchor[] {
-  const containerTop =
-    container.getBoundingClientRect().top - container.scrollTop;
+  const containerTop = container.getBoundingClientRect().top - container.scrollTop;
   const anchors: LineAnchor[] = [];
   for (const el of container.querySelectorAll<HTMLElement>("[data-line]")) {
     const line = Number(el.dataset.line);
@@ -63,8 +62,7 @@ export function useScrollSync(
       const top = scroller.scrollTop;
       const block = view.lineBlockAtHeight(top);
       const lineNo = view.state.doc.lineAt(block.from).number;
-      const frac =
-        block.height > 0 ? Math.min(1, (top - block.top) / block.height) : 0;
+      const frac = block.height > 0 ? Math.min(1, (top - block.top) / block.height) : 0;
       const targetLine = lineNo + frac;
 
       const anchors = collectAnchors(previewEl);

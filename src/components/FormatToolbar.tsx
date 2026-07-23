@@ -18,7 +18,7 @@ import {
   IconTable,
   IconUndo,
   IconWand,
-} from "./Icons";
+} from "./icons";
 
 interface FormatToolbarProps {
   view: EditorView | null;
@@ -65,11 +65,7 @@ const LAYOUT: ToolbarItem[][] = [
 
 const NOOP_CTX = { save: () => {} };
 
-export function FormatToolbar({
-  view,
-  disabled,
-  showFormatDoc = true,
-}: FormatToolbarProps) {
+export function FormatToolbar({ view, disabled, showFormatDoc = true }: FormatToolbarProps) {
   const off = disabled || !view;
   const shortcuts = useMemo(() => getShortcuts(), []);
 
@@ -86,9 +82,7 @@ export function FormatToolbar({
     <button
       key={id}
       type="button"
-      className={
-        typeof icon === "string" ? "icon-button text-button" : "icon-button"
-      }
+      className={typeof icon === "string" ? "icon-button text-button" : "icon-button"}
       title={tooltip(id)}
       aria-label={getCommand(id).label}
       disabled={off}
@@ -138,8 +132,7 @@ function TablePicker({
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node))
-        setOpen(false);
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);

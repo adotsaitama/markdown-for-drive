@@ -1,40 +1,39 @@
 import { useCallback, useEffect, useState } from "react";
 import { applyTheme, DEFAULT_THEME_ID, THEMES } from "../themes";
 
-export type ColorMode = "light" | "dark";
+export type Theme = "light" | "dark";
 
 const MODE_STORAGE_KEY = "theme";
 const THEME_STORAGE_KEY = "app-theme";
 
-function getInitialMode(): ColorMode {
-  const stored = localStorage.getItem(MODE_STORAGE_KEY);
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
-function getInitialThemeId(): string {
-  const stored = localStorage.getItem(THEME_STORAGE_KEY);
-  return stored && THEMES.some((theme) => theme.id === stored)
-    ? stored
-    : DEFAULT_THEME_ID;
-}
-
+/**
+ * Light/dark mode + selectable color theme (themes/ registry), both
+ * persisted in localStorage. The resolved mode is stamped on
+ * `<html data-theme="…">` (used by mode-specific CSS like the hljs
+ * palette) and the selected theme's tokens are applied as CSS variables.
+ */
 export function useTheme() {
-  const [mode, setMode] = useState<ColorMode>(getInitialMode);
-  const [themeId] = useState(getInitialThemeId);
+  const [theme, setTheme] = useState<Theme>(() => {
+    const stored = localStorage.getItem(MODE_STORAGE_KEY);
+    if (stored === "light" || stored === "dark") return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+
+  const [themeId, setThemeId] = useState<string>(() => {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    return stored && THEMES.some((t) => t.id === stored) ? stored : DEFAULT_THEME_ID;
+  });
 
   useEffect(() => {
-    document.documentElement.dataset.theme = mode;
-    localStorage.setItem(MODE_STORAGE_KEY, mode);
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(MODE_STORAGE_KEY, theme);
     localStorage.setItem(THEME_STORAGE_KEY, themeId);
-    applyTheme(themeId, mode);
-  }, [mode, themeId]);
+    applyTheme(themeId, theme);
+  }, [theme, themeId]);
 
   const toggle = useCallback(() => {
-    setMode((current) => (current === "dark" ? "light" : "dark"));
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
   }, []);
 
-  return { mode, toggle };
+  return { theme, toggle, themeId, setThemeId, themes: THEMES };
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import {
   createFolder,
   fetchDriveFileBlob,
@@ -25,23 +25,10 @@ function isManagedSrc(src: string): boolean {
  * work in local viewers after sync). The folder id and resolved blob URLs
  * are cached per session.
  */
-export function useDriveImages(
-  meta: DriveFileMeta | undefined,
-  accessToken: string | null,
-) {
+export function useDriveImages(meta: DriveFileMeta | undefined, accessToken: string | null) {
   const folderIdRef = useRef<string | null>(null);
   const urlCacheRef = useRef(new Map<string, string>());
   const seqRef = useRef(0);
-
-  useEffect(
-    () => () => {
-      for (const url of urlCacheRef.current.values()) {
-        URL.revokeObjectURL(url);
-      }
-      urlCacheRef.current.clear();
-    },
-    [],
-  );
 
   const getImagesFolder = useCallback(
     async (createIfMissing: boolean): Promise<string | null> => {

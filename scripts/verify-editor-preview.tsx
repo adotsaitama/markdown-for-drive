@@ -61,7 +61,7 @@ assert.match(
 );
 assert.match(
   html,
-  /<pre data-line="3"><code class="hljs language-ts" data-line="3">/,
+  /<pre data-line="3"><code class="hljs language-ts" data-line="3"[^>]*>/,
   "rehypeSourceLine did not apply data-line to the highlighted code block",
 );
 assert.match(

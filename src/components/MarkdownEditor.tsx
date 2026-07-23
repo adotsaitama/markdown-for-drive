@@ -8,7 +8,6 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { changeListIndent } from "../lib/markdownCommands";
 import { EDITOR_COMMANDS } from "../lib/editorCommands";
 import { getShortcuts } from "../lib/shortcutConfig";
-import { logger } from "../lib/logger";
 
 interface MarkdownEditorProps {
   /** Document shown when the editor mounts. Later changes do not reset the view. */
@@ -88,8 +87,8 @@ export function MarkdownEditor({
           paste: (event, v) => {
             const upload = onPasteImageRef.current;
             if (!upload) return false;
-            const item = Array.from(event.clipboardData?.items ?? []).find(
-              (i) => i.type.startsWith("image/"),
+            const item = Array.from(event.clipboardData?.items ?? []).find((i) =>
+              i.type.startsWith("image/"),
             );
             const blob = item?.getAsFile();
             if (!blob) return false;
@@ -107,11 +106,7 @@ export function MarkdownEditor({
               const pos = v.state.doc.toString().indexOf(placeholder);
               if (pos < 0) return; // user removed it meanwhile
               v.dispatch({
-                changes: {
-                  from: pos,
-                  to: pos + placeholder.length,
-                  insert: text,
-                },
+                changes: { from: pos, to: pos + placeholder.length, insert: text },
                 userEvent: "input",
               });
             };
@@ -119,18 +114,16 @@ export function MarkdownEditor({
               .then((path) => replacePlaceholder(`![](${path})`))
               .catch((err: unknown) => {
                 replacePlaceholder("");
-                logger.error(
-                  "drive.imageUpload",
-                  err,
-                  "画像のアップロードに失敗しました。",
+                console.error("image upload failed:", err);
+                window.alert(
+                  `画像のアップロードに失敗しました: ${err instanceof Error ? err.message : err}`,
                 );
               });
             return true;
           },
         }),
         EditorView.updateListener.of((update) => {
-          if (update.docChanged)
-            onChangeRef.current(update.state.doc.toString());
+          if (update.docChanged) onChangeRef.current(update.state.doc.toString());
         }),
         themeCompartment.current.of(dark ? oneDark : []),
       ],

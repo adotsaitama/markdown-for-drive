@@ -19,8 +19,7 @@ function describe(error: Error): ErrorInfo {
       case 401:
         return {
           title: "認証の有効期限が切れました (401)",
-          detail:
-            "アクセストークンが無効または期限切れです。再度ログインしてください。",
+          detail: "アクセストークンが無効または期限切れです。再度ログインしてください。",
           offerReauth: true,
         };
       case 403:
@@ -33,8 +32,7 @@ function describe(error: Error): ErrorInfo {
       case 404:
         return {
           title: "ファイルが見つかりません (404)",
-          detail:
-            "指定されたファイルが存在しないか、削除された可能性があります。",
+          detail: "指定されたファイルが存在しないか、削除された可能性があります。",
           offerReauth: false,
         };
       default:
@@ -48,19 +46,13 @@ function describe(error: Error): ErrorInfo {
 
   return {
     title: "エラーが発生しました",
-    detail:
-      error.message ||
-      "ネットワークエラーの可能性があります。接続を確認してください。",
+    detail: error.message || "ネットワークエラーの可能性があります。接続を確認してください。",
     offerReauth: false,
   };
 }
 
 /** Fallback UI mapping Drive/network errors to actionable messages. */
-export function ErrorFallback({
-  error,
-  onRetry,
-  onReauth,
-}: ErrorFallbackProps) {
+export function ErrorFallback({ error, onRetry, onReauth }: ErrorFallbackProps) {
   const info = describe(error);
   return (
     <div className="error-fallback" role="alert">

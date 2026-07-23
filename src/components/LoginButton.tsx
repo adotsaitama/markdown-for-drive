@@ -5,11 +5,7 @@ interface LoginButtonProps {
 }
 
 /** Prompts the user to grant Drive access via Google OAuth. */
-export function LoginButton({
-  onClick,
-  disabled,
-  isAuthenticating,
-}: LoginButtonProps) {
+export function LoginButton({ onClick, disabled, isAuthenticating }: LoginButtonProps) {
   return (
     <button
       type="button"

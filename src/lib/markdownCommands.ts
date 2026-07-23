@@ -26,11 +26,7 @@ export function toggleInlineMark(view: EditorView, mark: string): boolean {
       };
     }
     const inner = doc.sliceString(from, to);
-    if (
-      inner.length >= 2 * len &&
-      inner.startsWith(mark) &&
-      inner.endsWith(mark)
-    ) {
+    if (inner.length >= 2 * len && inner.startsWith(mark) && inner.endsWith(mark)) {
       // Selection includes the marks themselves: strip them.
       return {
         changes: [
@@ -73,9 +69,7 @@ function selectedLines(view: EditorView): Line[] {
 /** Toggle a fixed line prefix (e.g. `- `, `> `) on all selected lines. */
 export function toggleLinePrefix(view: EditorView, prefix: string): boolean {
   const lines = selectedLines(view);
-  const nonEmpty = lines.filter(
-    (l) => l.text.trim().length > 0 || lines.length === 1,
-  );
+  const nonEmpty = lines.filter((l) => l.text.trim().length > 0 || lines.length === 1);
   if (nonEmpty.length === 0) return false;
   const allHave = nonEmpty.every((l) => l.text.startsWith(prefix));
 
@@ -94,9 +88,7 @@ const ORDERED_RE = /^\d+\.\s/;
 /** Toggle an ordered list (`1. `, `2. `, …) on all selected lines. */
 export function toggleOrderedList(view: EditorView): boolean {
   const lines = selectedLines(view);
-  const nonEmpty = lines.filter(
-    (l) => l.text.trim().length > 0 || lines.length === 1,
-  );
+  const nonEmpty = lines.filter((l) => l.text.trim().length > 0 || lines.length === 1);
   if (nonEmpty.length === 0) return false;
   const allHave = nonEmpty.every((l) => ORDERED_RE.test(l.text));
 
@@ -131,10 +123,7 @@ export function changeListIndent(view: EditorView, dir: 1 | -1): boolean {
     } else {
       const ws = /^[ \t]+/.exec(l.text)?.[0] ?? "";
       if (ws.length === 0) continue;
-      changes.push({
-        from: l.from,
-        to: l.from + Math.min(ws.length, LIST_INDENT.length),
-      });
+      changes.push({ from: l.from, to: l.from + Math.min(ws.length, LIST_INDENT.length) });
     }
   }
   if (changes.length > 0) {
@@ -155,19 +144,10 @@ export function toggleCodeBlock(view: EditorView): boolean {
   const range = state.selection.main;
   const firstLine = state.doc.lineAt(range.from);
   const lastLine = state.doc.lineAt(range.to);
-  const before =
-    firstLine.number > 1 ? state.doc.line(firstLine.number - 1) : null;
-  const after =
-    lastLine.number < state.doc.lines
-      ? state.doc.line(lastLine.number + 1)
-      : null;
+  const before = firstLine.number > 1 ? state.doc.line(firstLine.number - 1) : null;
+  const after = lastLine.number < state.doc.lines ? state.doc.line(lastLine.number + 1) : null;
 
-  if (
-    before &&
-    after &&
-    FENCE_RE.test(before.text) &&
-    FENCE_RE.test(after.text)
-  ) {
+  if (before && after && FENCE_RE.test(before.text) && FENCE_RE.test(after.text)) {
     view.dispatch({
       changes: [
         { from: before.from, to: firstLine.from },
@@ -195,17 +175,9 @@ export function toggleCodeBlock(view: EditorView): boolean {
  * Insert an empty GFM table (header + separator + `rows` body rows) on a
  * new line after the current one, cursor placed in the first header cell.
  */
-export function insertTable(
-  view: EditorView,
-  rows: number,
-  cols: number,
-): boolean {
+export function insertTable(view: EditorView, rows: number, cols: number): boolean {
   const mkRow = (fill: string) => "|" + Array(cols).fill(fill).join("|") + "|";
-  const table = [
-    mkRow("     "),
-    mkRow(" --- "),
-    ...Array.from({ length: rows }, () => mkRow("     ")),
-  ].join("\n");
+  const table = [mkRow("     "), mkRow(" --- "), ...Array.from({ length: rows }, () => mkRow("     "))].join("\n");
 
   const { state } = view;
   const line = state.doc.lineAt(state.selection.main.head);
@@ -226,9 +198,7 @@ const TASK_RE = /^- \[[ xX]\]\s/;
 /** Toggle a task-list checkbox (`- [ ] `) on all selected lines. */
 export function toggleTaskList(view: EditorView): boolean {
   const lines = selectedLines(view);
-  const nonEmpty = lines.filter(
-    (l) => l.text.trim().length > 0 || lines.length === 1,
-  );
+  const nonEmpty = lines.filter((l) => l.text.trim().length > 0 || lines.length === 1);
   if (nonEmpty.length === 0) return false;
   const allHave = nonEmpty.every((l) => TASK_RE.test(l.text));
 
@@ -294,10 +264,7 @@ export function setHeading(view: EditorView, level: number): boolean {
   const lines = selectedLines(view);
   const marker = level > 0 ? "#".repeat(level) + " " : "";
   const allAtLevel =
-    level > 0 &&
-    lines.every(
-      (l) => l.text.startsWith(marker) && !l.text.startsWith(marker + "#"),
-    );
+    level > 0 && lines.every((l) => l.text.startsWith(marker) && !l.text.startsWith(marker + "#"));
 
   const changes = lines.map((l) => {
     const m = HEADING_RE.exec(l.text);

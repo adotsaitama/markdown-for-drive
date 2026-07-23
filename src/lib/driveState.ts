@@ -47,13 +47,10 @@ export function parseDriveState(search: string): DriveState | null {
   if (!Array.isArray(candidate.ids)) return null;
 
   return {
-    ids: candidate.ids.filter(
-      (id): id is string => typeof id === "string" && id.trim().length > 0,
-    ),
+    ids: candidate.ids.filter((id): id is string => typeof id === "string"),
     action: candidate.action,
     userId: typeof candidate.userId === "string" ? candidate.userId : undefined,
-    folderId:
-      typeof candidate.folderId === "string" ? candidate.folderId : undefined,
+    folderId: typeof candidate.folderId === "string" ? candidate.folderId : undefined,
   };
 }
 

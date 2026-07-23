@@ -1,5 +1,6 @@
 import type { AppTheme } from "./index";
 
+/** The app's original GitHub-flavored look, kept as a selectable theme. */
 export const defaultTheme: AppTheme = {
   id: "default",
   name: "Default",

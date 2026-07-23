@@ -89,9 +89,7 @@ export function useGoogleAuth(): GoogleAuth {
 
   const signIn = useCallback(() => {
     if (!clientRef.current) {
-      setError(
-        "Google authentication is not ready yet. Please try again in a moment.",
-      );
+      setError("Google authentication is not ready yet. Please try again in a moment.");
       return;
     }
     setError(null);

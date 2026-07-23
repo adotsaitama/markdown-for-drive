@@ -1,8 +1,13 @@
 import type { AppTheme } from "./index";
 
 /**
- * Blue Topaz token extraction.
- * Based on Blue-Topaz_Obsidian-css (MIT, Copyright 2020 whyt-byte).
+ * Blue Topaz — ported from the Obsidian theme "Blue-Topaz_Obsidian-css"
+ * (MIT License, Copyright (c) 2020 whyt-byte).
+ * https://github.com/whyt-byte/Blue-Topaz_Obsidian-css
+ *
+ * Token values are extracted from the theme's .theme-light / .theme-dark
+ * variable blocks (background/text/heading/code/blockquote colors and the
+ * signature blue accent).
  */
 export const blueTopazTheme: AppTheme = {
   id: "blue-topaz",

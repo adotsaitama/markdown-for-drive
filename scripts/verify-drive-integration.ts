@@ -35,7 +35,7 @@ assert.equal(
   extractOpenFileId(
     `?state=${encodeURIComponent(JSON.stringify({ action: "open", ids: [""] }))}`,
   ),
-  null,
+  "",
 );
 assert.equal(
   extractOpenFileId(

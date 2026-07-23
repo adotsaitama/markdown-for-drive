@@ -41,77 +41,25 @@ function smartCode(v: EditorView) {
  * combined with the shortcut config (shortcutConfig.ts).
  */
 export const EDITOR_COMMANDS = [
-  {
-    id: "save",
-    label: "保存",
-    run: (_v: EditorView, ctx: CommandContext) => ctx.save(),
-  },
-  {
-    id: "undo",
-    label: "元に戻す",
-    run: (v: EditorView) => (undo(v), v.focus()),
-  },
-  {
-    id: "redo",
-    label: "やり直し",
-    run: (v: EditorView) => (redo(v), v.focus()),
-  },
-  {
-    id: "bold",
-    label: "太字",
-    run: (v: EditorView) => toggleInlineMark(v, "**"),
-  },
-  {
-    id: "italic",
-    label: "斜体",
-    run: (v: EditorView) => toggleInlineMark(v, "*"),
-  },
-  {
-    id: "strikethrough",
-    label: "打ち消し線",
-    run: (v: EditorView) => toggleInlineMark(v, "~~"),
-  },
+  { id: "save", label: "保存", run: (_v: EditorView, ctx: CommandContext) => ctx.save() },
+  { id: "undo", label: "元に戻す", run: (v: EditorView) => (undo(v), v.focus()) },
+  { id: "redo", label: "やり直し", run: (v: EditorView) => (redo(v), v.focus()) },
+  { id: "bold", label: "太字", run: (v: EditorView) => toggleInlineMark(v, "**") },
+  { id: "italic", label: "斜体", run: (v: EditorView) => toggleInlineMark(v, "*") },
+  { id: "strikethrough", label: "打ち消し線", run: (v: EditorView) => toggleInlineMark(v, "~~") },
   {
     id: "code",
     label: "コード",
     hint: "複数行選択時はコードブロック",
     run: smartCode,
   },
-  {
-    id: "heading1",
-    label: "見出し1",
-    run: (v: EditorView) => setHeading(v, 1),
-  },
-  {
-    id: "heading2",
-    label: "見出し2",
-    run: (v: EditorView) => setHeading(v, 2),
-  },
-  {
-    id: "heading3",
-    label: "見出し3",
-    run: (v: EditorView) => setHeading(v, 3),
-  },
-  {
-    id: "bulletList",
-    label: "箇条書き",
-    run: (v: EditorView) => toggleLinePrefix(v, "- "),
-  },
-  {
-    id: "orderedList",
-    label: "番号付きリスト",
-    run: (v: EditorView) => toggleOrderedList(v),
-  },
-  {
-    id: "taskList",
-    label: "チェックリスト",
-    run: (v: EditorView) => toggleTaskList(v),
-  },
-  {
-    id: "quote",
-    label: "引用",
-    run: (v: EditorView) => toggleLinePrefix(v, "> "),
-  },
+  { id: "heading1", label: "見出し1", run: (v: EditorView) => setHeading(v, 1) },
+  { id: "heading2", label: "見出し2", run: (v: EditorView) => setHeading(v, 2) },
+  { id: "heading3", label: "見出し3", run: (v: EditorView) => setHeading(v, 3) },
+  { id: "bulletList", label: "箇条書き", run: (v: EditorView) => toggleLinePrefix(v, "- ") },
+  { id: "orderedList", label: "番号付きリスト", run: (v: EditorView) => toggleOrderedList(v) },
+  { id: "taskList", label: "チェックリスト", run: (v: EditorView) => toggleTaskList(v) },
+  { id: "quote", label: "引用", run: (v: EditorView) => toggleLinePrefix(v, "> ") },
   { id: "link", label: "リンク挿入", run: (v: EditorView) => insertLink(v) },
   {
     id: "table",
@@ -119,11 +67,7 @@ export const EDITOR_COMMANDS = [
     hint: "ボタンはサイズ選択、ショートカットは3列×2行",
     run: (v: EditorView) => insertTable(v, 2, 3),
   },
-  {
-    id: "horizontalRule",
-    label: "罫線",
-    run: (v: EditorView) => insertHorizontalRule(v),
-  },
+  { id: "horizontalRule", label: "罫線", run: (v: EditorView) => insertHorizontalRule(v) },
   {
     id: "formatDoc",
     label: "文書全体を整形",

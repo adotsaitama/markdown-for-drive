@@ -26,7 +26,6 @@ npm run dev
 npm run typecheck
 npm run verify:pipeline
 npm run verify:drive
-npm run verify:design
 ```
 
 プロダクションビルドは `npm run build`、ビルド結果の確認は `npm run preview` です。

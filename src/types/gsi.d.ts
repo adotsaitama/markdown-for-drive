@@ -29,9 +29,7 @@ declare global {
     }
 
     interface TokenClient {
-      requestAccessToken: (
-        overrideConfig?: OverridableTokenClientConfig,
-      ) => void;
+      requestAccessToken: (overrideConfig?: OverridableTokenClientConfig) => void;
     }
 
     function initTokenClient(config: TokenClientConfig): TokenClient;

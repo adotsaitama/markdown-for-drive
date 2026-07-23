@@ -1,0 +1,42 @@
+{
+  "name": "markdown-for-drive",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A Markdown workspace designed to open documents from Google Drive.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "verify:pipeline": "esbuild scripts/verify-editor-preview.tsx --bundle --platform=node --format=cjs --jsx=automatic --outfile=/tmp/markdown-for-drive-pipeline.cjs && node /tmp/markdown-for-drive-pipeline.cjs"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.10.4",
+    "@codemirror/lang-markdown": "^6.5.1",
+    "@codemirror/language-data": "^6.5.2",
+    "@codemirror/state": "^6.7.1",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "@codemirror/view": "^6.43.6",
+    "@tanstack/react-query": "^5.59.0",
+    "codemirror": "^6.0.2",
+    "markdownlint": "^0.40.0",
+    "mermaid": "^11.16.0",
+    "prettier": "^3.9.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.0",
+    "unist-util-visit": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/hast": "^3.0.5",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "esbuild": "^0.21.5",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8"
+  }
+}
